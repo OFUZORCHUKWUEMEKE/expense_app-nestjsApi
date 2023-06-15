@@ -1,6 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { ReportType, data } from './data';
 import { v4 as uuid } from 'uuid'
+
+interface Report{
+  amount:number;
+  source:string;
+}
+
+interface UpdateReport{
+  amount?:number;
+  source?:string;
+}
+
 @Injectable()
 export class AppService {
   getAllReports(type: string) {
@@ -27,7 +38,7 @@ export class AppService {
     return newData
   }
 
-  editReport(type: string, id: string, body) {
+  editReport(type: string, id: string, body:UpdateReport) {
     const reportType = type === 'income' ? ReportType.INCOME : ReportType.EXPENSE;
 
     const reportToUpdate = data.report.filter((report) => report.type === reportType).find((report) => report.id === id)
